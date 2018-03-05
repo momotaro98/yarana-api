@@ -1,0 +1,28 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in",
+      "methods": [
+        "get"
+      ],
+      "route": "kotos"
+    },
+    {
+      "name": "$return",
+      "type": "http",
+      "direction": "out"
+    },
+    {
+      "type": "documentDB",
+      "name": "documents",
+      "databaseName": "Yarana",
+      "collectionName": "Kotos",
+      "connection": "yarana_DOCUMENTDB",
+      "direction": "in"
+    }
+  ],
+  "disabled": false
+}
