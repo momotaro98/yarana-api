@@ -1,0 +1,29 @@
+{
+    "bindings": [
+      {
+        "authLevel": "function",
+        "name": "req",
+        "type": "httpTrigger",
+        "direction": "in",
+        "methods": [
+          "post"
+        ],
+        "route": "koto"
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "out"
+      },
+      {
+        "type": "documentDB",
+        "name": "kotoDocument",
+        "databaseName": "Yarana",
+        "collectionName": "Kotos",
+        "createIfNotExists": false,
+        "connection": "yarana_DOCUMENTDB",
+        "direction": "out"
+      }
+    ],
+    "disabled": false
+  }
