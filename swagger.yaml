@@ -1,0 +1,128 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is a API for yarana client.
+  version: 1.0.0
+  title: Yarana API
+  termsOfService: 'http://gitbhub.com/momotaro98/yarana-api'
+  contact:
+    email: ikenshirogivenup98@gmail.com
+  license:
+    name: MIT License
+    url: 'https://opensource.org/licenses/MIT'
+host: yarana-api.azurewebsites.net
+basePath: /api
+tags:
+  - name: koto
+    description: Everything about what you will do
+  - name: activity
+    description: Everything you did for koto
+schemes:
+  - http
+paths:
+  /kotos:
+    get:
+      tags:
+        - koto
+      summary: Finds kotos
+      description: Returns multiple kotos
+      operationId: userId
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          in: query
+          description: User id of the user
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Koto'
+        '400':
+          description: Invalid user id value
+  /koto:
+    post:
+      tags:
+        - koto
+      summary: register a new koto
+      description: ''
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Koto'
+        '400':
+          description: Invalid Koto
+  /activities:
+    get:
+      tags:
+        - activity
+      summary: Finds activities
+      description: Returns multiple activities
+      operationId: kotoId
+      produces:
+        - application/json
+      parameters:
+        - name: kotoId
+          in: query
+          description: Koto Id id of the Koto
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Activity'
+        '400':
+          description: Invalid koto id value
+  /activity:
+    post:
+      tags:
+        - activity
+      summary: register a new activity
+      description: ''
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Activity'
+        '400':
+          description: Invalid Activity
+definitions:
+  Koto:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID
+      userId:
+        type: string
+        description: User ID
+      title:
+        type: string
+        description: Title of Koto
+  Activity:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID
+      kotoId:
+        type: string
+        description: Koto ID
+      timestamp:
+        type: string
+        description: Time stamp of the activity
+externalDocs:
+  description: Find out more about Yarana API
+  url: 'https://github.com/momotaro98/yarana-api'
