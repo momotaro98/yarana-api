@@ -2,6 +2,8 @@
 
 Yarana API is a api for yarana client like [yarana-bot](https://github.com/momotaro98/yarana-bot).
 
+This api runs on Azure Functions and connects Cosmos DB.
+
 ## API Schemes
 
 ```
