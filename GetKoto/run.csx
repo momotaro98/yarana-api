@@ -1,10 +1,12 @@
 #r "Newtonsoft.Json"
+#r "Microsoft.WindowsAzure.Storage"
 
 using System.Net;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using Microsoft.WindowsAzure.Storage.Table;
 
-public static HttpResponseMessage Run(HttpRequestMessage req, IEnumerable<dynamic> documents, TraceWriter log)
+public static HttpResponseMessage Run(HttpRequestMessage req, IQueryable<Koto> kotos, TraceWriter log)
 {
     log.Info("C# HTTP trigger function processed a request.");
 
@@ -17,11 +19,18 @@ public static HttpResponseMessage Run(HttpRequestMessage req, IEnumerable<dynami
         return req.CreateResponse(HttpStatusCode.BadRequest, "Please pass a userId on the query string or in the request body");
     log.Info($"userId: {userId.ToString()}");
 
-    // Query from documents in CosmosDB
-    IEnumerable<dynamic> docs = documents.Where(doc => doc.userId == userId);
+    // Query data
+    var query = from koto in kotos
+        where koto.userId == userId
+        select new
+        {
+            id = koto.RowKey,
+            userId = koto.userId,
+            title = koto.title
+        };
 
     // Create JSON to return
-    string responseJSON = JsonConvert.SerializeObject(docs);
+    string responseJSON = JsonConvert.SerializeObject(query);
     log.Info($"JSON to response: {responseJSON}");
 
     // Create response
@@ -30,4 +39,10 @@ public static HttpResponseMessage Run(HttpRequestMessage req, IEnumerable<dynami
     response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
     response.Content.Headers.ContentType.CharSet = "utf-8";
     return response;
+}
+
+public class Koto : TableEntity
+{
+    public string userId { get; set; }
+    public string title { get; set; }
 }

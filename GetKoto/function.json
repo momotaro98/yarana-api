@@ -16,11 +16,10 @@
       "direction": "out"
     },
     {
-      "type": "documentDB",
-      "name": "documents",
-      "databaseName": "Yarana",
-      "collectionName": "Kotos",
-      "connection": "yarana_DOCUMENTDB",
+      "type": "table",
+      "name": "kotos",
+      "tableName": "Kotos",
+      "connection": "AzureWebJobsDashboard",
       "direction": "in"
     }
   ],
