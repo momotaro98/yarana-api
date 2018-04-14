@@ -1,28 +1,27 @@
 {
-    "bindings": [
-      {
-        "authLevel": "anonymous",
-        "name": "req",
-        "type": "httpTrigger",
-        "direction": "in",
-        "methods": [
-          "get"
-        ],
-        "route": "activities"
-      },
-      {
-        "name": "$return",
-        "type": "http",
-        "direction": "out"
-      },
-      {
-        "type": "documentDB",
-        "name": "documents",
-        "databaseName": "Yarana",
-        "collectionName": "Activities",
-        "connection": "yarana_DOCUMENTDB",
-        "direction": "in"
-      }
-    ],
-    "disabled": false
-  }
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in",
+      "methods": [
+        "get"
+      ],
+      "route": "activities"
+    },
+    {
+      "name": "$return",
+      "type": "http",
+      "direction": "out"
+    },
+    {
+      "type": "table",
+      "name": "activities",
+      "tableName": "Activities",
+      "connection": "AzureWebJobsDashboard",
+      "direction": "in"
+    }
+  ],
+  "disabled": false
+}
