@@ -4,7 +4,7 @@ using System.Net;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json.Linq;
 
-public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, IAsyncCollector<dynamic> kotoDocument, TraceWriter log)
+public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, ICollector<Koto> kotos, TraceWriter log)
 {
     log.Info("C# HTTP trigger function processed a request.");    
     dynamic data = await req.Content.ReadAsAsync<object>();
@@ -14,7 +14,21 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, IAsync
         log.Info($"Request doesn't have needed key. Request body {data.ToString()}");
         return req.CreateResponse(HttpStatusCode.BadRequest, "Please pass valid data in request body.");
     }
-    kotoDocument.AddAsync(koto);
+    kotos.Add(
+            new Koto() { 
+                PartitionKey = "Kotos", 
+                RowKey = koto.id,
+                userId = koto.userId,
+                title = koto.title }
+            );
     log.Info($"Added data {koto.ToString()}");
     return req.CreateResponse(HttpStatusCode.OK);
+}
+
+public class Koto
+{
+    public string PartitionKey { get; set; }
+    public string RowKey { get; set; }
+    public string userId { get; set; }
+    public string title { get; set; }
 }

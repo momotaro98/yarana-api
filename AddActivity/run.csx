@@ -4,7 +4,7 @@ using System.Net;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json.Linq;
 
-public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, IAsyncCollector<dynamic> activityDocument, TraceWriter log)
+public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, ICollector<Activity> activities, TraceWriter log)
 {
     log.Info("C# HTTP trigger function processed a request.");  
     dynamic data = await req.Content.ReadAsAsync<object>();
@@ -14,7 +14,21 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, IAsync
         log.Info($"Request doesn't have needed key. Request body {data.ToString()}");
         return req.CreateResponse(HttpStatusCode.BadRequest, "Please pass valid data in request body.");
     }
-    activityDocument.AddAsync(activity);
+    activities.Add(
+            new Activity() { 
+                PartitionKey = "Activities", 
+                RowKey = activity.id,
+                kotoId = activity.kotoId,
+                timestamp = activity.timestamp }
+            );
     log.Info($"Added data {activity.ToString()}");
     return req.CreateResponse(HttpStatusCode.OK);
+}
+
+public class Activity
+{
+    public string PartitionKey { get; set; }
+    public string RowKey { get; set; }
+    public string kotoId { get; set; }
+    public DateTime timestamp { get; set; }
 }
