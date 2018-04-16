@@ -26,7 +26,8 @@ public static HttpResponseMessage Run(HttpRequestMessage req, IQueryable<Koto> k
         {
             id = koto.RowKey,
             userId = koto.userId,
-            title = koto.title
+            title = koto.title,
+            pushDisabled = koto.pushDisabled
         };
 
     // Create JSON to return
@@ -45,4 +46,5 @@ public class Koto : TableEntity
 {
     public string userId { get; set; }
     public string title { get; set; }
+    public bool pushDisabled { get; set; }
 }
