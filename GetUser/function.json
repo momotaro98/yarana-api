@@ -1,0 +1,27 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in",
+      "methods": [
+        "get"
+      ],
+      "route": "users"
+    },
+    {
+      "name": "$return",
+      "type": "http",
+      "direction": "out"
+    },
+    {
+      "type": "table",
+      "name": "kotos",
+      "tableName": "Kotos",
+      "connection": "AzureWebJobsDashboard",
+      "direction": "in"
+    }
+  ],
+  "disabled": false
+}
