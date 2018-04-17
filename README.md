@@ -8,6 +8,8 @@ This api runs on Azure Functions and connects Cosmos DB.
 
 ```
 GET
+/users
+GET
 /kotos?userId=0123456789abcdefghijklmnopqrstuvwxyz
 POST
 /koto
@@ -17,13 +19,22 @@ POST
 /activity
 ```
 
+## User model
+
+```
+{
+  "id": "string"
+}
+```
+
 ## Koto model
 
 ```
 {
   "id": "string",
   "userId": "string",
-  "title": "string"
+  "title": "string",
+  "pushDisabled": "bool"
 }
 ```
 
@@ -33,6 +44,6 @@ POST
 {
   "id": "string",
   "kotoId": "string",
-  "timestamp": "string"
+  "timestamp": "DateTime"
 }
 ```
