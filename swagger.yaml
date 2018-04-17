@@ -137,7 +137,7 @@ definitions:
         type: string
         description: Title of Koto
       pushDisabled:
-        type: bool
+        type: boolean
         description: Flag if the yarana-bot pushes message about the Koto
   Activity:
     type: object
